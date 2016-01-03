@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2801BA451B03FD6600951C08 /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2801BA441B03FD6600951C08 /* explosion.wav */; };
+		2801BA471B040D1A00951C08 /* cloud2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2801BA461B040D1A00951C08 /* cloud2.png */; };
+		2801BA4B1B04294B00951C08 /* phasers.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2801BA4A1B04294B00951C08 /* phasers.wav */; };
+		282F797F1AFED24D00F90072 /* ufoClearBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 282F797E1AFED24D00F90072 /* ufoClearBackground.png */; };
+		2837433E1B35EF2A0071036C /* jetMain_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 2837433C1B35EF2A0071036C /* jetMain_black.png */; };
+		283930191AF7D00F00120022 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283930181AF7D00F00120022 /* AppDelegate.swift */; };
+		2839301E1AF7D00F00120022 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2839301C1AF7D00F00120022 /* Main.storyboard */; };
+		283930201AF7D00F00120022 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2839301F1AF7D00F00120022 /* Images.xcassets */; };
+		283930231AF7D00F00120022 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283930211AF7D00F00120022 /* LaunchScreen.xib */; };
+		2839302F1AF7D00F00120022 /* FighterJetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839302E1AF7D00F00120022 /* FighterJetTests.swift */; };
+		2839303B1AF7DCCF00120022 /* FighterJetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839303A1AF7DCCF00120022 /* FighterJetViewController.swift */; };
+		2839303D1AF7EBC800120022 /* BezierPathsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839303C1AF7EBC800120022 /* BezierPathsView.swift */; };
+		2839303F1AF7ED2700120022 /* JetBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839303E1AF7ED2700120022 /* JetBehavior.swift */; };
+		283B56041C13652F00D3E881 /* NightVisionShort2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 283B56031C13652F00D3E881 /* NightVisionShort2.mp3 */; };
+		283CB8C11B0179C90084FD2C /* floor.png in Resources */ = {isa = PBXBuildFile; fileRef = 283CB8C01B0179C90084FD2C /* floor.png */; };
+		283CB8C31B01A7840084FD2C /* cloud_clearBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 283CB8C21B01A7840084FD2C /* cloud_clearBack.png */; };
+		2841BA131BC2047300E78218 /* DeviceVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2841BA121BC2047300E78218 /* DeviceVersion.swift */; };
+		284233991B36128900123290 /* explosionShort.wav in Resources */ = {isa = PBXBuildFile; fileRef = 284233981B36128900123290 /* explosionShort.wav */; };
+		2842339D1B36142A00123290 /* ufo2_short.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2842339C1B36142A00123290 /* ufo2_short.wav */; };
+		284233A71B36178C00123290 /* gunShort.wav in Resources */ = {isa = PBXBuildFile; fileRef = 284233A61B36178C00123290 /* gunShort.wav */; };
+		284233AB1B36246200123290 /* laserJetShortWav.wav in Resources */ = {isa = PBXBuildFile; fileRef = 284233AA1B36246200123290 /* laserJetShortWav.wav */; };
+		284233AD1B36299700123290 /* ufoDisappear.wav in Resources */ = {isa = PBXBuildFile; fileRef = 284233AC1B36299700123290 /* ufoDisappear.wav */; };
+		284233AF1B36383900123290 /* floor500x100.png in Resources */ = {isa = PBXBuildFile; fileRef = 284233AE1B36383900123290 /* floor500x100.png */; };
+		284DB8391B365E3000A87720 /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284DB8371B365E3000A87720 /* StartScreenViewController.swift */; };
+		284DB83A1B365E3000A87720 /* StartScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284DB8381B365E3000A87720 /* StartScreenViewController.xib */; };
+		287383E71C1543C500D5052D /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287383E61C1543C500D5052D /* TextMessage.swift */; };
+		287383E91C15471400D5052D /* SendEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287383E81C15471400D5052D /* SendEmail.swift */; };
+		287AD2B11B02FC8A00952A64 /* backgroundBeach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 287AD2B01B02FC8A00952A64 /* backgroundBeach.jpg */; };
+		28895A401C07EF4600ABDCC2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28895A3F1C07EF4600ABDCC2 /* Constants.swift */; };
+		28D7E4D61BC4DBC500651A80 /* CartoonBomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D7E4D51BC4DBC500651A80 /* CartoonBomb.png */; };
+		28DCD1781C135A7800DF99AD /* sizzleShort.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28DCD1771C135A7800DF99AD /* sizzleShort.wav */; };
+		28F07E401B053BAF004ACA88 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F07E3F1B053BAF004ACA88 /* Default-Portrait.png */; };
+		28F07E421B053BB7004ACA88 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F07E411B053BB7004ACA88 /* Default-Portrait@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		283930291AF7D00F00120022 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2839300B1AF7D00F00120022 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 283930121AF7D00F00120022;
+			remoteInfo = FighterJet;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2801BA441B03FD6600951C08 /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
+		2801BA461B040D1A00951C08 /* cloud2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud2.png; sourceTree = "<group>"; };
+		2801BA4A1B04294B00951C08 /* phasers.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = phasers.wav; sourceTree = "<group>"; };
+		282F797E1AFED24D00F90072 /* ufoClearBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ufoClearBackground.png; sourceTree = "<group>"; };
+		2837433C1B35EF2A0071036C /* jetMain_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jetMain_black.png; sourceTree = "<group>"; };
+		283930131AF7D00F00120022 /* FlightyJet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlightyJet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		283930171AF7D00F00120022 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		283930181AF7D00F00120022 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2839301D1AF7D00F00120022 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2839301F1AF7D00F00120022 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		283930221AF7D00F00120022 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		283930281AF7D00F00120022 /* FighterJetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FighterJetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2839302D1AF7D00F00120022 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2839302E1AF7D00F00120022 /* FighterJetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FighterJetTests.swift; sourceTree = "<group>"; };
+		2839303A1AF7DCCF00120022 /* FighterJetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FighterJetViewController.swift; sourceTree = "<group>"; };
+		2839303C1AF7EBC800120022 /* BezierPathsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierPathsView.swift; sourceTree = "<group>"; };
+		2839303E1AF7ED2700120022 /* JetBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JetBehavior.swift; sourceTree = "<group>"; };
+		283B56031C13652F00D3E881 /* NightVisionShort2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NightVisionShort2.mp3; sourceTree = "<group>"; };
+		283CB8C01B0179C90084FD2C /* floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor.png; sourceTree = "<group>"; };
+		283CB8C21B01A7840084FD2C /* cloud_clearBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_clearBack.png; sourceTree = "<group>"; };
+		2841BA121BC2047300E78218 /* DeviceVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceVersion.swift; sourceTree = "<group>"; };
+		284233981B36128900123290 /* explosionShort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosionShort.wav; sourceTree = "<group>"; };
+		2842339C1B36142A00123290 /* ufo2_short.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ufo2_short.wav; sourceTree = "<group>"; };
+		284233A61B36178C00123290 /* gunShort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gunShort.wav; sourceTree = "<group>"; };
+		284233AA1B36246200123290 /* laserJetShortWav.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laserJetShortWav.wav; sourceTree = "<group>"; };
+		284233AC1B36299700123290 /* ufoDisappear.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ufoDisappear.wav; sourceTree = "<group>"; };
+		284233AE1B36383900123290 /* floor500x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor500x100.png; sourceTree = "<group>"; };
+		284DB8371B365E3000A87720 /* StartScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartScreenViewController.swift; path = ../StartScreenViewController.swift; sourceTree = "<group>"; };
+		284DB8381B365E3000A87720 /* StartScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StartScreenViewController.xib; path = ../StartScreenViewController.xib; sourceTree = "<group>"; };
+		287383E61C1543C500D5052D /* TextMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
+		287383E81C15471400D5052D /* SendEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEmail.swift; sourceTree = "<group>"; };
+		287AD2B01B02FC8A00952A64 /* backgroundBeach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = backgroundBeach.jpg; sourceTree = "<group>"; };
+		28895A3F1C07EF4600ABDCC2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		28D7E4D51BC4DBC500651A80 /* CartoonBomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CartoonBomb.png; sourceTree = "<group>"; };
+		28DCD1771C135A7800DF99AD /* sizzleShort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sizzleShort.wav; sourceTree = "<group>"; };
+		28F07E3F1B053BAF004ACA88 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
+		28F07E411B053BB7004ACA88 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		283930101AF7D00F00120022 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		283930251AF7D00F00120022 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2801BA3B1B03D8B600951C08 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		2839300A1AF7D00F00120022 = {
+			isa = PBXGroup;
+			children = (
+				283930151AF7D00F00120022 /* FighterJet */,
+				2839302B1AF7D00F00120022 /* FighterJetTests */,
+				283930141AF7D00F00120022 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		283930141AF7D00F00120022 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				283930131AF7D00F00120022 /* FlightyJet.app */,
+				283930281AF7D00F00120022 /* FighterJetTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		283930151AF7D00F00120022 /* FighterJet */ = {
+			isa = PBXGroup;
+			children = (
+				2839303A1AF7DCCF00120022 /* FighterJetViewController.swift */,
+				2839303E1AF7ED2700120022 /* JetBehavior.swift */,
+				28895A3F1C07EF4600ABDCC2 /* Constants.swift */,
+				2839303C1AF7EBC800120022 /* BezierPathsView.swift */,
+				284DB8371B365E3000A87720 /* StartScreenViewController.swift */,
+				287383E61C1543C500D5052D /* TextMessage.swift */,
+				287383E81C15471400D5052D /* SendEmail.swift */,
+				2841BA121BC2047300E78218 /* DeviceVersion.swift */,
+				284DB8381B365E3000A87720 /* StartScreenViewController.xib */,
+				2839301C1AF7D00F00120022 /* Main.storyboard */,
+				2801BA4A1B04294B00951C08 /* phasers.wav */,
+				284233A61B36178C00123290 /* gunShort.wav */,
+				284233AA1B36246200123290 /* laserJetShortWav.wav */,
+				284233AC1B36299700123290 /* ufoDisappear.wav */,
+				2842339C1B36142A00123290 /* ufo2_short.wav */,
+				2801BA441B03FD6600951C08 /* explosion.wav */,
+				284233981B36128900123290 /* explosionShort.wav */,
+				28DCD1771C135A7800DF99AD /* sizzleShort.wav */,
+				283B56031C13652F00D3E881 /* NightVisionShort2.mp3 */,
+				28F07E3F1B053BAF004ACA88 /* Default-Portrait.png */,
+				2801BA3B1B03D8B600951C08 /* Sounds */,
+				283930161AF7D00F00120022 /* Supporting Files */,
+			);
+			path = FighterJet;
+			sourceTree = "<group>";
+		};
+		283930161AF7D00F00120022 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				283930181AF7D00F00120022 /* AppDelegate.swift */,
+				28D7E4D51BC4DBC500651A80 /* CartoonBomb.png */,
+				2837433C1B35EF2A0071036C /* jetMain_black.png */,
+				283CB8C21B01A7840084FD2C /* cloud_clearBack.png */,
+				287AD2B01B02FC8A00952A64 /* backgroundBeach.jpg */,
+				2801BA461B040D1A00951C08 /* cloud2.png */,
+				282F797E1AFED24D00F90072 /* ufoClearBackground.png */,
+				283CB8C01B0179C90084FD2C /* floor.png */,
+				284233AE1B36383900123290 /* floor500x100.png */,
+				28F07E411B053BB7004ACA88 /* Default-Portrait@2x.png */,
+				2839301F1AF7D00F00120022 /* Images.xcassets */,
+				283930211AF7D00F00120022 /* LaunchScreen.xib */,
+				283930171AF7D00F00120022 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2839302B1AF7D00F00120022 /* FighterJetTests */ = {
+			isa = PBXGroup;
+			children = (
+				2839302E1AF7D00F00120022 /* FighterJetTests.swift */,
+				2839302C1AF7D00F00120022 /* Supporting Files */,
+			);
+			path = FighterJetTests;
+			sourceTree = "<group>";
+		};
+		2839302C1AF7D00F00120022 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2839302D1AF7D00F00120022 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		283930121AF7D00F00120022 /* FighterJet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 283930321AF7D00F00120022 /* Build configuration list for PBXNativeTarget "FighterJet" */;
+			buildPhases = (
+				2839300F1AF7D00F00120022 /* Sources */,
+				283930101AF7D00F00120022 /* Frameworks */,
+				283930111AF7D00F00120022 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FighterJet;
+			productName = FighterJet;
+			productReference = 283930131AF7D00F00120022 /* FlightyJet.app */;
+			productType = "com.apple.product-type.application";
+		};
+		283930271AF7D00F00120022 /* FighterJetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 283930351AF7D00F00120022 /* Build configuration list for PBXNativeTarget "FighterJetTests" */;
+			buildPhases = (
+				283930241AF7D00F00120022 /* Sources */,
+				283930251AF7D00F00120022 /* Frameworks */,
+				283930261AF7D00F00120022 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2839302A1AF7D00F00120022 /* PBXTargetDependency */,
+			);
+			name = FighterJetTests;
+			productName = FighterJetTests;
+			productReference = 283930281AF7D00F00120022 /* FighterJetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2839300B1AF7D00F00120022 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Paul Yang";
+				TargetAttributes = {
+					283930121AF7D00F00120022 = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = TM77C6T3NV;
+					};
+					283930271AF7D00F00120022 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 283930121AF7D00F00120022;
+					};
+				};
+			};
+			buildConfigurationList = 2839300E1AF7D00F00120022 /* Build configuration list for PBXProject "FighterJet" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2839300A1AF7D00F00120022;
+			productRefGroup = 283930141AF7D00F00120022 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				283930121AF7D00F00120022 /* FighterJet */,
+				283930271AF7D00F00120022 /* FighterJetTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		283930111AF7D00F00120022 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2839301E1AF7D00F00120022 /* Main.storyboard in Resources */,
+				283CB8C11B0179C90084FD2C /* floor.png in Resources */,
+				283CB8C31B01A7840084FD2C /* cloud_clearBack.png in Resources */,
+				284233991B36128900123290 /* explosionShort.wav in Resources */,
+				2801BA471B040D1A00951C08 /* cloud2.png in Resources */,
+				282F797F1AFED24D00F90072 /* ufoClearBackground.png in Resources */,
+				283930231AF7D00F00120022 /* LaunchScreen.xib in Resources */,
+				2842339D1B36142A00123290 /* ufo2_short.wav in Resources */,
+				28D7E4D61BC4DBC500651A80 /* CartoonBomb.png in Resources */,
+				2837433E1B35EF2A0071036C /* jetMain_black.png in Resources */,
+				284233A71B36178C00123290 /* gunShort.wav in Resources */,
+				2801BA4B1B04294B00951C08 /* phasers.wav in Resources */,
+				28DCD1781C135A7800DF99AD /* sizzleShort.wav in Resources */,
+				284233AB1B36246200123290 /* laserJetShortWav.wav in Resources */,
+				287AD2B11B02FC8A00952A64 /* backgroundBeach.jpg in Resources */,
+				283930201AF7D00F00120022 /* Images.xcassets in Resources */,
+				283B56041C13652F00D3E881 /* NightVisionShort2.mp3 in Resources */,
+				284233AD1B36299700123290 /* ufoDisappear.wav in Resources */,
+				28F07E401B053BAF004ACA88 /* Default-Portrait.png in Resources */,
+				284233AF1B36383900123290 /* floor500x100.png in Resources */,
+				284DB83A1B365E3000A87720 /* StartScreenViewController.xib in Resources */,
+				28F07E421B053BB7004ACA88 /* Default-Portrait@2x.png in Resources */,
+				2801BA451B03FD6600951C08 /* explosion.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		283930261AF7D00F00120022 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2839300F1AF7D00F00120022 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				287383E91C15471400D5052D /* SendEmail.swift in Sources */,
+				2839303D1AF7EBC800120022 /* BezierPathsView.swift in Sources */,
+				2839303B1AF7DCCF00120022 /* FighterJetViewController.swift in Sources */,
+				2841BA131BC2047300E78218 /* DeviceVersion.swift in Sources */,
+				283930191AF7D00F00120022 /* AppDelegate.swift in Sources */,
+				28895A401C07EF4600ABDCC2 /* Constants.swift in Sources */,
+				2839303F1AF7ED2700120022 /* JetBehavior.swift in Sources */,
+				287383E71C1543C500D5052D /* TextMessage.swift in Sources */,
+				284DB8391B365E3000A87720 /* StartScreenViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		283930241AF7D00F00120022 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2839302F1AF7D00F00120022 /* FighterJetTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2839302A1AF7D00F00120022 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 283930121AF7D00F00120022 /* FighterJet */;
+			targetProxy = 283930291AF7D00F00120022 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2839301C1AF7D00F00120022 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2839301D1AF7D00F00120022 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		283930211AF7D00F00120022 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				283930221AF7D00F00120022 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		283930301AF7D00F00120022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		283930311AF7D00F00120022 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		283930331AF7D00F00120022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = FighterJet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pablo23.FlightyJet;
+				PRODUCT_NAME = FlightyJet;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		283930341AF7D00F00120022 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = FighterJet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pablo23.FlightyJet;
+				PRODUCT_NAME = FlightyJet;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		283930361AF7D00F00120022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = FighterJetTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FighterJet.app/FighterJet";
+			};
+			name = Debug;
+		};
+		283930371AF7D00F00120022 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = FighterJetTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FighterJet.app/FighterJet";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2839300E1AF7D00F00120022 /* Build configuration list for PBXProject "FighterJet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				283930301AF7D00F00120022 /* Debug */,
+				283930311AF7D00F00120022 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		283930321AF7D00F00120022 /* Build configuration list for PBXNativeTarget "FighterJet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				283930331AF7D00F00120022 /* Debug */,
+				283930341AF7D00F00120022 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		283930351AF7D00F00120022 /* Build configuration list for PBXNativeTarget "FighterJetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				283930361AF7D00F00120022 /* Debug */,
+				283930371AF7D00F00120022 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2839300B1AF7D00F00120022 /* Project object */;
+}
