@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("UIApplicationMain: application did finish launching, initializing NSUserDefaults")
         
         let defaults = NSUserDefaults.standardUserDefaults()
-        var highScore: Int? = defaults.objectForKey("highScore") as? Int
-        var numCoins: Int? = defaults.objectForKey("numCoins") as? Int
+        let highScore: Int? = defaults.objectForKey("highScore") as? Int
+        let numCoins: Int? = defaults.objectForKey("numCoins") as? Int
         if highScore == nil {
             defaults.setObject(0, forKey: "highScore")
         }

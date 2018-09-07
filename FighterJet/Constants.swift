@@ -4,7 +4,8 @@
 //
 //  Created by Paul Yang on 11/26/15.
 //  Copyright © 2015 Paul Yang. All rights reserved.
-//
+
+// file of constants containing sizes and push/gravity magnitudes used for various iphone sizes
 
 import Foundation
 import UIKit

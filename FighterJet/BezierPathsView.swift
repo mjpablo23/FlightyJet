@@ -1,10 +1,12 @@
 //
-//  BezierPathsView.swift
+//
 //  FighterJet
 //
 //  Created by Paul Yang on 5/4/15.
 //  Copyright (c) 2015 Paul Yang. All rights reserved.
 //
+
+// this file draws the bezier paths used in the background
 
 import UIKit
 
@@ -41,21 +43,14 @@ class BezierPathsView: UIView {
         // drawing code
         for (name, path) in bezierPaths {
             
-            //UIColor.greenColor().setFill()
             pathFillColor[name]?.setFill()
-            // fillColor.setFill()
             
-            //UIColor.redColor().setStroke()
             pathStrokeColor[name]?.setStroke()
-            // strokeColor.setStroke()
             
             path.lineWidth = 0.5
             path.stroke()
             
             if name != "Walls" {
-//                path.fill()
-//              good: kCGBlendModeMultiply
-                // path.fillWithBlendMode(kCGBlendModeDarken, alpha: 0.75)
                 path.fillWithBlendMode(CGBlendMode.Darken, alpha: 0.75)
             }
         }

@@ -1,17 +1,17 @@
 //
 //  DeviceVersion.swift
-//  FoodGasm
 //
 //  Created by Paul Yang on 8/5/15.
 //  Copyright (c) 2015 Paul Yang. All rights reserved.
 //
+
+// file to detect iphone version for different screen sizes
 
 import Foundation
 import UIKit
 
 class DeviceVersion {
 
-    // stuff to detect phone version
     // http://stackoverflow.com/questions/24059327/detect-current-device-with-ui-user-interface-idiom-in-swift
     enum UIUserInterfaceIdiom : Int
     {
@@ -38,10 +38,6 @@ class DeviceVersion {
         static let IS_IPAD              = UIDevice.currentDevice().userInterfaceIdiom == .Pad && ScreenSize.SCREEN_MAX_LENGTH == 1024.0
     }
     
-    //    how to use
-    //    if DeviceType.IS_IPHONE_6P {
-    //    println("IS_IPHONE_6P")
-    //    }
     
     struct Version{
         static let SYS_VERSION_FLOAT = (UIDevice.currentDevice().systemVersion as NSString).floatValue
@@ -50,17 +46,6 @@ class DeviceVersion {
         static let iOS9 = (Version.SYS_VERSION_FLOAT >= 9.0 && Version.SYS_VERSION_FLOAT < 10.0)
     }
     
-    //    how to use
-    //    if Version.iOS8 {
-    //    println("iOS8")
-    //    }
-
-//    class func getDeviceType() -> String {
-//        var device:String = ""
-//        if DeviceType.IS_IPHONE_6P {
-//     //       device
-//        }
-//    }
     class func getDeviceIndex() -> Int {
         var deviceTypeIndex:Int = 0
         if (DeviceVersion.DeviceType.IS_IPHONE_4_OR_LESS) {

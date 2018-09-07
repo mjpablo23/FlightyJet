@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Paul Yang. All rights reserved.
 //
 
+// this file is for the screen that pops up in between games.  buttons to restart, continue, give feedback by text, rate the app, credits alert
+
 import UIKit
 import MessageUI
-
-// put review button into Get More Continues button
 
 protocol StartScreenDelegate: class {
     func startGame()
@@ -20,6 +20,7 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
     
     weak var delegate: StartScreenDelegate?
 
+    // MARK: various buttons on the screen
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var rateButton: UIButton!
     @IBOutlet weak var continueButton: UIButton!
@@ -30,11 +31,7 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
     @IBOutlet weak var ufoImageView: UIImageView!
     var defaults:NSUserDefaults!
     
-//    override init() {
-//        // super.init()
-//        //println("initializing start screen")
-//    }
-    
+    // MARK: initialize
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -43,6 +40,7 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
         super.init(coder: aDecoder)!
     }
     
+    // MARK: view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         defaults = NSUserDefaults.standardUserDefaults()
@@ -58,6 +56,7 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
         updateContinueButton()
     }
     
+    // MARK: continue button
     func updateContinueButton() {
         defaults = NSUserDefaults.standardUserDefaults()
         let infiniteContinues = defaults.objectForKey("infiniteContinuesPurchased") as? Int
@@ -78,10 +77,10 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        var width = self.view.frame.width * 0.33
-        var height = width * 15/8
-        var originX:CGFloat = 5
-        var originY = self.view.frame.height/5
+        let width = self.view.frame.width * 0.33
+        let height = width * 15/8
+        let originX:CGFloat = 5
+        let originY = self.view.frame.height/5
         jetImageView.contentMode = UIViewContentMode.ScaleAspectFit
         ufoImageView.contentMode = UIViewContentMode.ScaleAspectFit
         jetImageView.frame.size = CGSizeMake(width, height)
@@ -103,14 +102,7 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
     @IBAction func rateButtonPress(sender: UIButton) {
         // second button
         defaults = NSUserDefaults.standardUserDefaults()
-//        var ratedBefore = defaults.objectForKey("ratedBefore") as? Int
-//        var numContinues = defaults.objectForKey("numContinues") as? Int
-//        if (ratedBefore == nil || ratedBefore == 0) {
-//            defaults.setObject(1, forKey: "ratedBefore")
-//        }
-//        defaults.setObject(numContinues!+5, forKey: "numContinues")
         UIApplication.sharedApplication().openURL(NSURL(string: "itms://itunes.apple.com/us/app/flighty-jet/id1067196690?ls=1&mt=8")!)
-//        updateContinueButton()
     }
 
     @IBAction func continueButtonPress(sender: UIButton) {
@@ -130,7 +122,7 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
     
     func needContinuesAlert() {
         defaults = NSUserDefaults.standardUserDefaults()
-        var ratedBefore = defaults.objectForKey("ratedBefore") as? Int
+        let ratedBefore = defaults.objectForKey("ratedBefore") as? Int
         var msg:String = "Give feedback for additional continues"
         if (ratedBefore == 1) {
             msg = "You have used up your continues"
@@ -164,9 +156,9 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
     }
     
     @IBAction func iapPress(sender: UIButton) {
-        var msg:String = "Comment on Facebook (2 continues)\nText Me Feedback (1 continue)"
+        let msg:String = "Comment on Facebook (2 continues)\nText Me Feedback (1 continue)"
         
-        var alert = UIAlertController(title: "Give Feedback for Continues", message: msg, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Give Feedback for Continues", message: msg, preferredStyle: UIAlertControllerStyle.Alert)
         
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel)
@@ -174,15 +166,6 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
                 //print("cancel pressed")
             })
         
-
-//        alert.addAction(UIAlertAction(title: "Like", style: .Default)
-//            { (action: UIAlertAction!) -> Void in
-//                self.openFBpage()
-//                var numContinues = self.defaults.objectForKey("numContinues") as? Int
-//                numContinues = numContinues! + 2
-//                self.defaults.setObject(numContinues, forKey: "numContinues")
-//                self.updateContinueButton()
-//            })
         alert.addAction(UIAlertAction(title: "Feedback on FB", style: .Default)
             { (action: UIAlertAction!) -> Void in
                 self.openFBpage()
@@ -201,39 +184,10 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
                 self.updateContinueButton()
             })
         
-        
-        /*
-        var infiniteContinuesPurchased = self.defaults.objectForKey("infiniteContinuesPurchased") as? Int
-        if (infiniteContinuesPurchased == 1) {
-        msg = "infinite continues already purchased"
-        }
-        else {
-        msg = "Comment for 3 continues, Like for 2 continues"
-        }
-        */
-        
-        /*
-        if (infiniteContinuesPurchased == nil || infiniteContinuesPurchased == 0) {
-            alert.addAction(UIAlertAction(title: "5 Continues - $0.99", style: .Default)
-                { (action: UIAlertAction!) -> Void in
-                    var numContinues = self.defaults.objectForKey("numContinues") as? Int
-                    numContinues = numContinues! + 5
-                    self.defaults.setObject(numContinues, forKey: "numContinues")
-                    self.updateContinueButton()
-                })
-            alert.addAction(UIAlertAction(title: "Infinite Continues - $1.99", style: .Default)
-                { (action: UIAlertAction!) -> Void in
-                    // open link to app store
-                    //print("purchase button 2 pressed")
-                    self.defaults.setObject(1, forKey:"infiniteContinuesPurchased")
-                    self.updateContinueButton()
-                })
-        }
-        */
         presentViewController(alert, animated: true, completion: nil)
-        //print("setting alertViewPresent to false")
     }
     
+    // MARK: send text feedback
     @IBAction func sendText() {
         //print("calling sendText")
         if (MFMessageComposeViewController.canSendText()) {
@@ -262,35 +216,4 @@ class StartScreenViewController: UIViewController, MFMessageComposeViewControlle
     }
     */
 
-    
-//    func sendEmailButtonTapped(sender: AnyObject) {
-//        let mailComposeViewController = configuredMailComposeViewController()
-//        if MFMailComposeViewController.canSendMail() {
-//            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
-//        } else {
-//            self.showSendMailErrorAlert()
-//        }
-//    }
-//    
-//    func configuredMailComposeViewController() -> MFMailComposeViewController {
-//        let mailComposerVC = MFMailComposeViewController()
-//        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
-//        
-//        mailComposerVC.setToRecipients(["nurdin@gmail.com"])
-//        mailComposerVC.setSubject("Sending you an in-app e-mail...")
-//        mailComposerVC.setMessageBody("Sending e-mail in-app is not so bad!", isHTML: false)
-//        
-//        return mailComposerVC
-//    }
-//    
-//    func showSendMailErrorAlert() {
-//        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
-//        sendMailErrorAlert.show()
-//    }
-//
-//    // MARK: MFMailComposeViewControllerDelegate
-//    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
-//        controller.dismissViewControllerAnimated(true, completion: nil)
-//        
-//    }
 }

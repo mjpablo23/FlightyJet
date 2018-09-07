@@ -17,7 +17,6 @@
 		283930201AF7D00F00120022 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2839301F1AF7D00F00120022 /* Images.xcassets */; };
 		283930231AF7D00F00120022 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283930211AF7D00F00120022 /* LaunchScreen.xib */; };
 		2839302F1AF7D00F00120022 /* FighterJetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839302E1AF7D00F00120022 /* FighterJetTests.swift */; };
-		2839303B1AF7DCCF00120022 /* FighterJetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839303A1AF7DCCF00120022 /* FighterJetViewController.swift */; };
 		2839303D1AF7EBC800120022 /* BezierPathsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839303C1AF7EBC800120022 /* BezierPathsView.swift */; };
 		2839303F1AF7ED2700120022 /* JetBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839303E1AF7ED2700120022 /* JetBehavior.swift */; };
 		283B56041C13652F00D3E881 /* NightVisionShort2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 283B56031C13652F00D3E881 /* NightVisionShort2.mp3 */; };
@@ -32,12 +31,12 @@
 		284233AF1B36383900123290 /* floor500x100.png in Resources */ = {isa = PBXBuildFile; fileRef = 284233AE1B36383900123290 /* floor500x100.png */; };
 		284DB8391B365E3000A87720 /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284DB8371B365E3000A87720 /* StartScreenViewController.swift */; };
 		284DB83A1B365E3000A87720 /* StartScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284DB8381B365E3000A87720 /* StartScreenViewController.xib */; };
-		287383E71C1543C500D5052D /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287383E61C1543C500D5052D /* TextMessage.swift */; };
-		287383E91C15471400D5052D /* SendEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287383E81C15471400D5052D /* SendEmail.swift */; };
 		287AD2B11B02FC8A00952A64 /* backgroundBeach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 287AD2B01B02FC8A00952A64 /* backgroundBeach.jpg */; };
 		28895A401C07EF4600ABDCC2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28895A3F1C07EF4600ABDCC2 /* Constants.swift */; };
 		28D7E4D61BC4DBC500651A80 /* CartoonBomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D7E4D51BC4DBC500651A80 /* CartoonBomb.png */; };
 		28DCD1781C135A7800DF99AD /* sizzleShort.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28DCD1771C135A7800DF99AD /* sizzleShort.wav */; };
+		28DD53AF1C49B0E200B2E635 /* FighterJetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD53AE1C49B0E200B2E635 /* FighterJetViewController.swift */; };
+		28DD53B11C49B3BA00B2E635 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 28DD53B01C49B3BA00B2E635 /* README.txt */; };
 		28F07E401B053BAF004ACA88 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F07E3F1B053BAF004ACA88 /* Default-Portrait.png */; };
 		28F07E421B053BB7004ACA88 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F07E411B053BB7004ACA88 /* Default-Portrait@2x.png */; };
 /* End PBXBuildFile section */
@@ -67,7 +66,6 @@
 		283930281AF7D00F00120022 /* FighterJetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FighterJetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2839302D1AF7D00F00120022 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2839302E1AF7D00F00120022 /* FighterJetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FighterJetTests.swift; sourceTree = "<group>"; };
-		2839303A1AF7DCCF00120022 /* FighterJetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FighterJetViewController.swift; sourceTree = "<group>"; };
 		2839303C1AF7EBC800120022 /* BezierPathsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierPathsView.swift; sourceTree = "<group>"; };
 		2839303E1AF7ED2700120022 /* JetBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JetBehavior.swift; sourceTree = "<group>"; };
 		283B56031C13652F00D3E881 /* NightVisionShort2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NightVisionShort2.mp3; sourceTree = "<group>"; };
@@ -82,12 +80,12 @@
 		284233AE1B36383900123290 /* floor500x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor500x100.png; sourceTree = "<group>"; };
 		284DB8371B365E3000A87720 /* StartScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartScreenViewController.swift; path = ../StartScreenViewController.swift; sourceTree = "<group>"; };
 		284DB8381B365E3000A87720 /* StartScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StartScreenViewController.xib; path = ../StartScreenViewController.xib; sourceTree = "<group>"; };
-		287383E61C1543C500D5052D /* TextMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
-		287383E81C15471400D5052D /* SendEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEmail.swift; sourceTree = "<group>"; };
 		287AD2B01B02FC8A00952A64 /* backgroundBeach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = backgroundBeach.jpg; sourceTree = "<group>"; };
 		28895A3F1C07EF4600ABDCC2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		28D7E4D51BC4DBC500651A80 /* CartoonBomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CartoonBomb.png; sourceTree = "<group>"; };
 		28DCD1771C135A7800DF99AD /* sizzleShort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sizzleShort.wav; sourceTree = "<group>"; };
+		28DD53AE1C49B0E200B2E635 /* FighterJetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FighterJetViewController.swift; sourceTree = "<group>"; };
+		28DD53B01C49B3BA00B2E635 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		28F07E3F1B053BAF004ACA88 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		28F07E411B053BB7004ACA88 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,13 +136,12 @@
 		283930151AF7D00F00120022 /* FighterJet */ = {
 			isa = PBXGroup;
 			children = (
-				2839303A1AF7DCCF00120022 /* FighterJetViewController.swift */,
+				28DD53B01C49B3BA00B2E635 /* README.txt */,
+				28DD53AE1C49B0E200B2E635 /* FighterJetViewController.swift */,
 				2839303E1AF7ED2700120022 /* JetBehavior.swift */,
 				28895A3F1C07EF4600ABDCC2 /* Constants.swift */,
 				2839303C1AF7EBC800120022 /* BezierPathsView.swift */,
 				284DB8371B365E3000A87720 /* StartScreenViewController.swift */,
-				287383E61C1543C500D5052D /* TextMessage.swift */,
-				287383E81C15471400D5052D /* SendEmail.swift */,
 				2841BA121BC2047300E78218 /* DeviceVersion.swift */,
 				284DB8381B365E3000A87720 /* StartScreenViewController.xib */,
 				2839301C1AF7D00F00120022 /* Main.storyboard */,
@@ -246,7 +243,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Paul Yang";
 				TargetAttributes = {
 					283930121AF7D00F00120022 = {
@@ -305,6 +302,7 @@
 				284233AF1B36383900123290 /* floor500x100.png in Resources */,
 				284DB83A1B365E3000A87720 /* StartScreenViewController.xib in Resources */,
 				28F07E421B053BB7004ACA88 /* Default-Portrait@2x.png in Resources */,
+				28DD53B11C49B3BA00B2E635 /* README.txt in Resources */,
 				2801BA451B03FD6600951C08 /* explosion.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,14 +321,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				287383E91C15471400D5052D /* SendEmail.swift in Sources */,
 				2839303D1AF7EBC800120022 /* BezierPathsView.swift in Sources */,
-				2839303B1AF7DCCF00120022 /* FighterJetViewController.swift in Sources */,
 				2841BA131BC2047300E78218 /* DeviceVersion.swift in Sources */,
 				283930191AF7D00F00120022 /* AppDelegate.swift in Sources */,
 				28895A401C07EF4600ABDCC2 /* Constants.swift in Sources */,
+				28DD53AF1C49B0E200B2E635 /* FighterJetViewController.swift in Sources */,
 				2839303F1AF7ED2700120022 /* JetBehavior.swift in Sources */,
-				287383E71C1543C500D5052D /* TextMessage.swift in Sources */,
 				284DB8391B365E3000A87720 /* StartScreenViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +389,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -477,6 +474,7 @@
 				INFOPLIST_FILE = FighterJet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[arch=*]" = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pablo23.FlightyJet;
 				PRODUCT_NAME = FlightyJet;
 				PROVISIONING_PROFILE = "";
@@ -498,6 +496,7 @@
 				);
 				INFOPLIST_FILE = FighterJetTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pablo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FighterJet.app/FighterJet";
 			};
@@ -513,6 +512,7 @@
 				);
 				INFOPLIST_FILE = FighterJetTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pablo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FighterJet.app/FighterJet";
 			};

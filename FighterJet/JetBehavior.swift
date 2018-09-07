@@ -4,7 +4,9 @@
 //
 //  Created by Paul Yang on 5/4/15.
 //  Copyright (c) 2015 Paul Yang. All rights reserved.
-//
+
+// this file describes the UI dynamic behaviors for the various items like the jet, bullet, and ufo.  
+// behaviors include gravity, push behaviors at different magnitudes and angles 
 
 import UIKit
 
@@ -50,14 +52,10 @@ class JetBehavior: UIDynamicBehavior {
             magnitude = Constants.Magnitudes.gravityMagnitudes[3]
         }
         
-        gravity.magnitude = magnitude // 0.9 // 0.10
-        //        collider.action = { ()->Void in
-        // println("collider action")
-        //        }
+        gravity.magnitude = magnitude
         addChildBehavior(gravity)
         addChildBehavior(collider)
         addChildBehavior(bounceBehavior)
-        // addChildBehavior(push)
     }
     
     // MARK: - jet behavior
@@ -72,27 +70,22 @@ class JetBehavior: UIDynamicBehavior {
         
         push!.addItem(jet)
         
-        //print("current magnitude: \(gravity.magnitude)")
-        
         gravity.addItem(jet)
     }
     
     var piVal: CGFloat = 3.145926
     
+    // action to push the jet up at an angle
     func pushJetUp(jet: UIView) {
-        var deg: CGFloat = 95 // 89.85
+        let deg: CGFloat = 95
         pushJetAtAngle(jet, angle: piVal*(-deg/180))
     }
     
     func pushJetAtAngle(jet: UIView, angle: CGFloat) {
         push!.removeItem(jet)
         
-        // try removing and adding the jet to stop it from moving (doesn't work)
-//        removeJet(jet as UIImageView)
-//        addJet(jet as UIImageView)
-//         UIDynamicItemBehavior.linearVelocityForItem(jet.)
-        var currentVelocity:CGPoint = bounceBehavior.linearVelocityForItem(jet)
-        var negVelocity: CGPoint = CGPointMake(-currentVelocity.x, -currentVelocity.y)
+        let currentVelocity:CGPoint = bounceBehavior.linearVelocityForItem(jet)
+        let negVelocity: CGPoint = CGPointMake(-currentVelocity.x, -currentVelocity.y)
         bounceBehavior.addLinearVelocity(negVelocity, forItem: jet)
         
         push = UIPushBehavior(items: [jet], mode: UIPushBehaviorMode.Instantaneous)
@@ -156,11 +149,6 @@ class JetBehavior: UIDynamicBehavior {
         g.removeFromSuperview()
     }
     
-//    func addFloor(f: UIImageView) {
-//        dynamicAnimator?.referenceView?.addSubview(f)
-//        collider.addItem(f)
-//        bounceBehavior.addItem(f)
-//    }
     
     // MARK: - bullet behavior    
     func addBullet(bullet: UIView, id: String, mag: CGFloat) {
@@ -172,7 +160,7 @@ class JetBehavior: UIDynamicBehavior {
         push = UIPushBehavior(items: [bullet], mode: UIPushBehaviorMode.Instantaneous)
         addChildBehavior(push!)
         
-        var degrees:CGFloat = 0
+        let degrees:CGFloat = 0
         push!.setAngle(piVal * (degrees/180), magnitude: mag) // 0.15 for ball, smaller for line
         
         push!.addItem(bullet)

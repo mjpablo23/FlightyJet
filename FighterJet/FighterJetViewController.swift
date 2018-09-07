@@ -6,90 +6,37 @@
 //  Copyright (c) 2015 Paul Yang. All rights reserved.
 //
 
+// this is the main file
+// this files contains the animations of various objects, and draws the jet, barriers, and ufo
+// 
+
 import UIKit
 import AVFoundation
 import StoreKit
 
-class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UICollisionBehaviorDelegate, StartScreenDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UICollisionBehaviorDelegate, StartScreenDelegate {
 
-    // in app purchases
-    // 0.99 -- 1 continue
-    // 2.99 -- 5 continues
-    // 9.99 -- infinite continues
-    
-    // 7145 -- amy
-    
-    
-    // 5-6-15 -- stuff to do:
-    // add background (done)
-    // add animations for barriers disappearing, plane blowing up
-    // slow down bullets (done)
-    // make better obstacles (ok)
-    // draw bezier paths with different colors  (done)
-    // add sound (ok)
-    // score tracking (ok)
-    // gravity item -- like fruit ninja (done)
-    // coins/stars for in app purchases
-    // put in button to turn on/off collisions for jet (ok)
-    // scrolling floor (ok)
-    // fix gravity and push (ok)
-    // replace barriers with pipes (no)
-    // put score as giant letters in middle of screen (done)
-    // add delay between pushes so instantaneous pushes don't accumulate (ok)
-    // add clouds, make it rain
-    // add flame animation to jet
-    // different color score if in debug mode (ok)
-    // different score for coins?
-    // open barriers for in-app purchase (ok)
-    // try on other simulators for iphone (4s,5)
-    // change to use gameView.bounds.midX instead of view.frame
-    // put magic numbers into ConstantsMain struct
-    // hide status bar (ok)
-    // turn off landscape (ok)
-    // get rid of tree, draw another cloud (ok)
-    // make ufo appear in background small, then fall into screen (scratch)
-    // make barriers appear more often (just go faster)
-    // launch screen
-    // alert pop up to ask user to rate for more coins (ok)
-    // add coins when passing through barrier or shooting ufo
-    // Save high score (ok)
-    // game over restart (ok)
-    // need to pause barriers from advancing (ok)
-    // in app purchases (takes a day to get differences into app store)
-    // pop up modal view for game over to go to launch screen
-    // add coins (2 for passing barrier, 1 for ufo)
-    // draw another stationary floor under moving floor
-    
-    // put in incentives for getting high score, like free life
-    
-    // try changing to compact width, regular height for running on other iphone sizes
-    
-    // learn about json
-    // maker faire
-    
-    // make it work for various iphone versions
-    
     // MARK: - game view, dynamic behavior
     @IBOutlet weak var gameView: BezierPathsView!
     
+    // lazily initialize the dynamic animator
     lazy var animator: UIDynamicAnimator = {
         let lazilyCreatedDynamicAnimator = UIDynamicAnimator(referenceView: self.gameView)
         lazilyCreatedDynamicAnimator.delegate = self
         return lazilyCreatedDynamicAnimator
     }()
     
+    // instantiate the jet behavior model, containing the gravity behavior and the collision behavior
     let jetBehavior = JetBehavior()
     
-    // MARK: - variables and ConstantsMain
+    // MARK: - variables and Constants
+    // size the jet for various iphone sizes
     var jetSize: CGSize {
         
         var h = gameView.bounds.size.width / CGFloat(5)
         var w = h * CGFloat(2)
         
-        
         if (DeviceVersion.DeviceType.IS_IPHONE_4_OR_LESS) {
-//            h *= 0.65
-//            w *= 0.6
             h = Constants.Sizes.jetHeight[0]
             w = Constants.Sizes.jetWidth[0]
         }
@@ -98,29 +45,29 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
             w = Constants.Sizes.jetWidth[1]
         }
         else if (DeviceVersion.DeviceType.IS_IPHONE_6) {
-//            h *= 1
-//            w *= 1
             h = Constants.Sizes.jetHeight[2]
             w = Constants.Sizes.jetWidth[2]
         }
         else if (DeviceVersion.DeviceType.IS_IPHONE_6P) {
-//            h *= 1.2
-//            w *= 1.2
             h = Constants.Sizes.jetHeight[3]
             w = Constants.Sizes.jetWidth[3]
         }
         
-        // return CGSize(width: size, height: size/1.5)
         return CGSize(width: w, height: h)
     }
     
+    // quick calculation for the width of a small object relative to the screen size
     var smallObjectWidth: CGFloat {
         return gameView.bounds.size.width / CGFloat(10)
     }
     
-//    var jetView: UIView?
-    var jetView: UIImageView?
+    
+    
+    // MARK: arrays, constants for bullets
+    // array to keep track of bullet items.
     var bulletViewArray: [String:UIView] = [String:UIView]()  // (UIView,Int) = (bulletView, numCollisions)
+    
+    // array keeping track of collisions for bullets
     var bulletCollisionsArray: [String:Int] = [String:Int]()
     var bulletCount = 0
     var bulletLimit = 10
@@ -128,7 +75,10 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         let size = gameView.bounds.size.width / CGFloat(50)
         return CGSize(width: size, height: size/2)
     }
+    // boolean to determine whether bullet is a line or a circle
+    let bulletIsCircle = false
     
+    // MARK: constants for barrier
     var barrierOriginStart: CGFloat!
     var barrierOriginX: CGFloat = 0
     var barrierIndex: Int = 0
@@ -145,37 +95,38 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     var squareTimer: NSTimer!
     var squareWidth: CGFloat!
     
+    // MARK: - image views for jet, ufo, floor, background, clouds
+    var jetView: UIImageView?
     var ufoView: UIImageView! = nil
-    
     var gravityItemView: UIImageView! = nil
     
     var floorView: UIImageView! = nil
     var floorView2: UIImageView! = nil
     var floorHeight: CGFloat {
         return gameView.bounds.height / 20
-        // return self.view.frame.height / 20
     }
 
     var backgroundView: UIImageView! = nil
-    var cloudTimer: NSTimer!
-    var cloudTimer2: NSTimer!
-    var floorTimer: NSTimer!
-    
     @IBOutlet weak var backgroundImageView: UIImageView!
     
     var cloudView: UIImageView!
     var cloud2View: UIImageView!
     var treeView: UIImageView!
     
+    // MARK: - timers
+    var cloudTimer: NSTimer!
+    var cloudTimer2: NSTimer!
+    var floorTimer: NSTimer!
+    
+    // MARK: - debug mode flags
     var debugToggleButton: UIButton!
-    // var debugMode = true
     var debugMode = false
     
     var alertViewPresent = false
     var gameEndingCollision = false
     
+    // MARK: - data structures for barriers
     var bPair: barrierPair!
-    
     struct barrierPair {
         var topBarrier: UIImageView!
         var bottomBarrier: UIImageView!
@@ -204,14 +155,9 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     }
     
     var barrierGapAsPercentageOfGameviewHeightCurrent = ConstantsMain.barrierGapAsPercentageOfGameviewHeight
-    // need 4 states: open, closed, opening, closing
-//    var openingBarrier = false
-//    var closingBarrier = false
-    
-    // barrier states are:  open, closed, opening, or closing
     var barrierState:String = "closed"
     
-    // score label
+    // MARK: - score label
     var scoreLabel: UILabel!
     var score:Int = 0
     var scoreUpdatedForLevel = false
@@ -221,7 +167,7 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     var numCoins: Int!
     var firstGame:Int = 1
     
-    // sounds
+    // MARK: - av audio players for sounds
     var jetSound = AVAudioPlayer()
     var ufoSound = AVAudioPlayer()
     var sizzleSound = AVAudioPlayer()
@@ -229,49 +175,22 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     var hitUfoSound = AVAudioPlayer()
     var musicSound = AVAudioPlayer()
     
-    // Use a user default to track transactions
+    // MARK: ns user defaults
     let defaults = NSUserDefaults.standardUserDefaults()
     
-    //Step 4 Product ID. This one will be same as in your itunesconnect in app purchase
+    // Product ID. This one will be same as in your itunesconnect in app purchase
     var product_id: NSString?
-    
-    
     
     
     // MARK: - view life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // https://www.airpair.com/ios/posts/swift-storekit-in-app-purchases
-        // NSUUID.UUID().UUIDString
-        
-        // stuff for in-app purchases
-        // http://stackoverflow.com/questions/26235822/in-app-purchase-in-swift-with-a-single-product
-        product_id = "YOUR_PRODUCT_ID";
-        super.viewDidLoad()
-        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
-        
-        //Check if product is purchased
-        
         let defaults = NSUserDefaults.standardUserDefaults()
         let numContinues = defaults.objectForKey("numContinues") as? Int
         if (numContinues == nil) {
             defaults.setObject(5, forKey: "numContinues")
         }
-        
-        if (defaults.boolForKey("purchased")){
-            
-            // Hide a view or show content depends on your requirement
-            
-            
-            //overlayView.hidden = true
-            
-        }
-        else if (!defaults.boolForKey("stonerPurchased")){
-            //print("false")
-        }
-        
-        // end stuff for in-app purchases
         
         animator.addBehavior(jetBehavior)
         jetBehavior.collider.collisionDelegate = self
@@ -296,11 +215,7 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         // drawDebugToggleButton()
         
         
-        
         drawScoreLabel()
-        
-        
-        
         
         loadHighScoreAndCoins()
         drawHighScoreLabel()
@@ -310,14 +225,13 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         
         musicSound.play()
         
-        // tapScreenAlert()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // draw boundaries
         
-        var extraSpace:CGFloat = 50 // add extra space to walls so they are outside of frame
+        let extraSpace:CGFloat = 50 // add extra space to walls so they are outside of frame
         let origin = CGPointMake(0, -extraSpace)
         let bottomLeft = CGPointMake(0, gameView.bounds.height - floorHeight*2)
         let topRight = CGPointMake(gameView.bounds.width+extraSpace, -extraSpace)
@@ -329,9 +243,6 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         path.addLineToPoint(topRight)
         path.addLineToPoint(bottomRight)
         
-        // messes up behavior if barrier objects are drawn here
-        //        drawMovingBarrier()
-        
         // boundaries for view objects
         jetBehavior.addBarrier(path, named: PathNames.Walls)
         gameView.setPath(path, named: PathNames.Walls, fillcolor: UIColor.redColor(), strokecolor: UIColor.whiteColor())
@@ -341,30 +252,30 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     
     func prepareSounds() {
         // var urlDir = NSURL(fileURLWithPath: "Sounds", isDirectory: true)
-        var jetUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("laserJetShortWav", ofType:"wav")!)
+        let jetUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("laserJetShortWav", ofType:"wav")!)
         jetSound = try! AVAudioPlayer(contentsOfURL: jetUrl, fileTypeHint: nil)
         jetSound.prepareToPlay()
 
-        var ufoUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ufo2_short", ofType:"wav")!)
+        let ufoUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ufo2_short", ofType:"wav")!)
         ufoSound = try! AVAudioPlayer(contentsOfURL: ufoUrl, fileTypeHint: nil)
         ufoSound.prepareToPlay()
 
-        var sizzleUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("sizzleShort", ofType:"wav")!)
+        let sizzleUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("sizzleShort", ofType:"wav")!)
         sizzleSound = try! AVAudioPlayer(contentsOfURL: sizzleUrl, fileTypeHint: nil)
         sizzleSound.prepareToPlay()
         
         // var collisionUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gunShort", ofType:"wav")!)
-        var collisionUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("explosionShort", ofType:"wav")!)
+        let collisionUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("explosionShort", ofType:"wav")!)
         collisionSound = try! AVAudioPlayer(contentsOfURL: collisionUrl, fileTypeHint: nil)
         collisionSound.prepareToPlay()
         
-        //var hitUfoUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("explosionShort", ofType:"wav")!)
-        var hitUfoUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ufoDisappear", ofType:"wav")!)
+        //let hitUfoUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("explosionShort", ofType:"wav")!)
+        let hitUfoUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ufoDisappear", ofType:"wav")!)
         hitUfoSound = try! AVAudioPlayer(contentsOfURL: hitUfoUrl, fileTypeHint: nil)
         hitUfoSound.prepareToPlay()
         
-        //var musicUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("Schala", ofType:"mp3")!)
-        var musicUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("NightVisionShort2", ofType:"mp3")!)
+        //let musicUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("Schala", ofType:"mp3")!)
+        let musicUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("NightVisionShort2", ofType:"mp3")!)
         musicSound = try! AVAudioPlayer(contentsOfURL: musicUrl, fileTypeHint: nil)
         musicSound.prepareToPlay()
         musicSound.numberOfLoops = -1
@@ -393,23 +304,8 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         sound.play()
     }
     
-    
-    
-//    func tapScreenAlert() {
-//        var alert = UIAlertController(title: "Tap screen", message: "Tap anywhere repeatedly to fly the jet", preferredStyle: UIAlertControllerStyle.Alert)
-//        alert.addAction(UIAlertAction(title: "Ok", style: .Default)
-//            { (action: UIAlertAction!) -> Void in
-//                self.startMovingBarriers()
-//                self.jetBehavior.gravity.addItem(self.jetView!)
-//            })
-//        presentViewController(alert, animated: true, completion: nil)
-//    }
-    
-    // try to see what happens if I draw in here
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // drawJet()
-        //getReadyAlert()
         updateContinueLabel()
     }
     
@@ -453,10 +349,6 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     
     func drawScoreLabel() {
         // put in upper left corner, or lower right corner
-//        var w:CGFloat = smallObjectWidth * 3
-//        var h:CGFloat = smallObjectWidth * 3
-//        var space:CGFloat = 10
-//        var rect = CGRectMake(self.view.bounds.width/4 - w/3, self.view.bounds.height/4 - h/2, w, h)
         let deviceTypeIndex:Int = DeviceVersion.getDeviceIndex()
         let rect = CGRectMake(Constants.Positions.scoreLabelX[deviceTypeIndex], Constants.Positions.scoreLabelY[deviceTypeIndex], Constants.Sizes.scoreLabelWidth[deviceTypeIndex], Constants.Sizes.scoreLabelHeight[deviceTypeIndex])
         scoreLabel = UILabel(frame: rect)
@@ -483,7 +375,7 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     }
     
     func drawDebugToggleButton() {
-        var frame = CGRectMake(smallObjectWidth/4, gameView.bounds.height - smallObjectWidth/5, smallObjectWidth , smallObjectWidth/2)
+        let frame = CGRectMake(smallObjectWidth/4, gameView.bounds.height - smallObjectWidth/5, smallObjectWidth , smallObjectWidth/2)
         debugToggleButton = UIButton(frame: frame)
         debugToggleButton.backgroundColor = UIColor.greenColor()
         debugToggleButton.setTitle("toggle", forState: UIControlState.Normal)
@@ -519,7 +411,7 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     // MARK: - drawing objects 
     
     
-    
+    // MARK: draw and animate barriers
     func drawMovingBarrier() {
         // draw the moving barrier
         barrierOriginStart = gameView.bounds.width - barrierWidth
@@ -542,17 +434,7 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     }
     
     func animateImageBarrier() {
-        /*
-        if bPair != nil {
-            UIView.animateWithDuration(30.0,  //3.0,
-                delay: 10.0,  // 1.0
-                options: UIViewAnimationOptions.CurveLinear,
-                animations: {self.bPair.bottomBarrier.frame.origin.x = -self.bPair.bottomBarrier.bounds.width},
-                completion: { if $0 {
-                    // self.bPair.bottomBarrier.removeFromSuperview()
-                    self.bPair = nil } } )
-        }
-        */
+        
     }
     
     func drawImageBarrier() {
@@ -565,24 +447,9 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
             gameView.addSubview(bPair.bottomBarrier)
             gameView.sendSubviewToBack(bPair.bottomBarrier)
         }
-        else {
-//            if bPair.bottomBarrier.frame.origin.x == -self.bPair.bottomBarrier.bounds.width {
-//                bPair.bottomBarrier.frame.origin.x = gameView.bounds.width/2
-//            }
-        }
-        
-        animateImageBarrier()
     }
     
-    // no longer used
-    func drawMovingSquare() {
-        squareOriginStartX = gameView.bounds.width - squareWidth //- barrierWidth
-        squareOriginStartY = 10
-        squareOriginX = squareOriginStartX
-        squareOriginY = squareOriginStartY
-        squareTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("drawSquare"), userInfo: nil, repeats: true)
-    }
-    
+    // MARK: draw the jet item
     func drawJet() {
         if jetView != nil {
             // //print("jet exists already")
@@ -597,42 +464,31 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         
         jetView = UIImageView(frame: jetFrame)
         jetView!.image = UIImage(named: "jetMain_black.png")
-        //jetView!.image = UIImage(named: "ufoClearBackground.png")
         jetView!.backgroundColor = UIColor.clearColor()
         jetBehavior.addJet(jetView!)
     }
     
-//    func drawBackgroundImage() {
-//        var rect = CGRectMake(-10, 0, gameView.bounds.width*2, gameView.bounds.height)
-//        backgroundView = UIImageView(frame: rect)
-//        backgroundView.image = UIImage(named: "backgroundBeach.jpg")
-//        gameView.addSubview(backgroundView)
-//
-//    }
-    
-
     
     func removeJetView() {
         jetBehavior.removeJet(jetView!)
         jetView = nil
     }
     
+    // MARK: draw the bullet item
     func drawBullet() {
-        // add to array of bullets so far
-        // //print("calling drawBullet()")
+
         
-        var bulletIsCircle = false
         
         var bulletView:UIView!
         var magnitude:CGFloat = 0
         
         if bulletIsCircle {
             // circle bullet
-            var bulletRadius = bulletSize.width
-            var currentJetFrame = jetView!.frame
-            var bulletOrigin = CGPointMake(currentJetFrame.origin.x + currentJetFrame.width + 1,
+            let bulletRadius = bulletSize.width
+            let currentJetFrame = jetView!.frame
+            let bulletOrigin = CGPointMake(currentJetFrame.origin.x + currentJetFrame.width + 1,
                 currentJetFrame.origin.y + currentJetFrame.height/2)
-            var bulletFrame = CGRect(origin: bulletOrigin, size: CGSizeMake(bulletRadius*2, bulletRadius*2))
+            let bulletFrame = CGRect(origin: bulletOrigin, size: CGSizeMake(bulletRadius*2, bulletRadius*2))
             bulletView = UIView(frame: bulletFrame)
             bulletView.backgroundColor = UIColor.blackColor()
             magnitude = 0.17
@@ -644,16 +500,16 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         }
         else {
             // line bullet
-            var bulletRadius = bulletSize.width
-            var currentJetFrame = jetView!.frame
-            var bulletOrigin = CGPointMake(currentJetFrame.origin.x + currentJetFrame.width + 1,
+            let bulletRadius = bulletSize.width
+            let currentJetFrame = jetView!.frame
+            let bulletOrigin = CGPointMake(currentJetFrame.origin.x + currentJetFrame.width + 1,
                 currentJetFrame.origin.y + currentJetFrame.height/5)
-            var bulletFrame = CGRect(origin: bulletOrigin, size: CGSizeMake(bulletRadius, bulletRadius/3))
+            let bulletFrame = CGRect(origin: bulletOrigin, size: CGSizeMake(bulletRadius, bulletRadius/3))
             bulletView = UIView(frame: bulletFrame)
             bulletView.backgroundColor = UIColor.redColor()
             
+            // give a magnitude to the push behavior to determine how fast the bullet will go
             // have different magnitudes depending on device type
-            // //print("model: \(UIDevice.currentDevice().userInterfaceIdiom == .Phone && UIScreen.mainScreen().bounds.size.width)")
             
             if (DeviceVersion.DeviceType.IS_IPHONE_4_OR_LESS) {
                 magnitude = 0.012
@@ -669,7 +525,7 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
             }
             
         }
-        var bulletStr = "bullet_\(bulletCount)"
+        let bulletStr = "bullet_\(bulletCount)"
         bulletViewArray[bulletStr] = bulletView
         bulletCollisionsArray[bulletStr] = 0
         bulletCount += 1
@@ -677,6 +533,7 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         jetBehavior.addBullet(bulletView, id: bulletStr, mag: magnitude)
     }
     
+    // remove the bullet once collision has occured
     func removeBullet(bulletViewInArray: UIView, bulletStr: String) {
         jetBehavior.removeBullet(bulletViewInArray)
         bulletViewArray.removeValueForKey(bulletStr)
@@ -684,40 +541,37 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     }
     
     
-    // to open the barriers, need to redraw them with a timer
-    
-//    func drawBarrier(x: CGFloat) {
+    // MARK: draw the barriers that the jet needs to fly through
     func drawBarrier() {
-        var x = barrierOriginX
+        let x = barrierOriginX
         // //print("calling draw barrier at origin.x: \(x)")
         
         // //print("barrier.x: \(x)")
         
         updateScore()
         
-        var barrierGapCurrent = updateBarrierGap()
+        let barrierGapCurrent = updateBarrierGap()
         
-        var topExtraLength:CGFloat = smallObjectWidth*2
-        var bottomExtraLength = topExtraLength
+        let topExtraLength:CGFloat = smallObjectWidth*2
+        let bottomExtraLength = topExtraLength
         
-        var playableHeight = gameView.bounds.height - floorHeight
+        let playableHeight = gameView.bounds.height - floorHeight
         
-        var barrierGap:CGFloat = playableHeight * barrierGapCurrent // barrierGapAsPercentageOfGameviewHeightCurrent
-        var topBarrierLengthOnScreen = (playableHeight * ConstantsMain.topBarrierLengthOnScreen[barrierIndex])
-        // var topBarrierLengthOnScreen = (playableHeight * 0.25)
-        var topBarrierLengthTotal = topBarrierLengthOnScreen + topExtraLength  //0.5
-        var bottomBarrierLengthOnScreen = playableHeight - topBarrierLengthOnScreen - barrierGap
-        var bottomBarrierLengthTotal = bottomBarrierLengthOnScreen + bottomExtraLength
+        let barrierGap:CGFloat = playableHeight * barrierGapCurrent // barrierGapAsPercentageOfGameviewHeightCurrent
+        let topBarrierLengthOnScreen = (playableHeight * ConstantsMain.topBarrierLengthOnScreen[barrierIndex])
+        let topBarrierLengthTotal = topBarrierLengthOnScreen + topExtraLength  //0.5
+        let bottomBarrierLengthOnScreen = playableHeight - topBarrierLengthOnScreen - barrierGap
+        let bottomBarrierLengthTotal = bottomBarrierLengthOnScreen + bottomExtraLength
         
         var topRect = CGRectMake(0, 0, barrierWidth, topBarrierLengthTotal)
         topRect.origin = CGPointMake(x, -topExtraLength)
-        var topPath = UIBezierPath(roundedRect: topRect, cornerRadius: smallObjectWidth/2)
+        let topPath = UIBezierPath(roundedRect: topRect, cornerRadius: smallObjectWidth/2)
                 
         var bottomRect = CGRectMake(0, 0, barrierWidth, bottomBarrierLengthTotal)
         bottomRect.origin = CGPointMake(x, playableHeight - bottomBarrierLengthOnScreen)
-        var bottomPath = UIBezierPath(roundedRect: bottomRect, cornerRadius: smallObjectWidth/2)
+        let bottomPath = UIBezierPath(roundedRect: bottomRect, cornerRadius: smallObjectWidth/2)
         
-        var barrierColor = UIColor.getColor(barrierIndex)
+        let barrierColor = UIColor.getColor(barrierIndex)
         jetBehavior.addBarrier(topPath, named: PathNames.MovingBarrierTop)
         gameView.setPath(topPath, named: PathNames.MovingBarrierTop, fillcolor: barrierColor, strokecolor: UIColor.blackColor())
         
@@ -725,12 +579,10 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         gameView.setPath(bottomPath, named: PathNames.MovingBarrierBottom, fillcolor: barrierColor, strokecolor: UIColor.blackColor())
         
         // update value for barrierOriginX
-        let barrierSpeed:CGFloat = 10.0  // randomBetweenNumbers(7.0, secondNum: 11.0)
-        //barrierOriginX = barrierOriginX - CGFloat(10)
+        let barrierSpeed:CGFloat = 10.0
         barrierOriginX = barrierOriginX - barrierSpeed
-        // //print("barrierSpeed: \(barrierSpeed)")
         
-        // if the barrier goes off the left side of gameView, then end of level is reached
+        // if the barrier goes off the left side of gameView, then end of level is reached (not implemented)
         if barrierOriginX + barrierWidth <= 0 {
             endOfLevelReset()
             // numCoins += 1
@@ -783,21 +635,19 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
             if squareTimer == nil {
                 squareOriginX = squareOriginStartX
                 squareOriginY = squareOriginStartY
-                // drawMovingSquare()
             }
         
     }
     
     func drawSquare() {
-        var startX:CGFloat = squareOriginX //gameView.bounds.width * 0.75
-        var startY:CGFloat = squareOriginY
+        let startX:CGFloat = squareOriginX //gameView.bounds.width * 0.75
         
         // //print("square.x: \(startX)")
         
-        var width = squareWidth
-        var height = width
+        let width = squareWidth
+        let height = width
         var rect = CGRectMake(startX, squareOriginY, width, height)
-        var path = UIBezierPath(roundedRect: rect, cornerRadius: 3)
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: 3)
 
         jetBehavior.addBarrier(path, named: PathNames.Square)
         gameView.setPath(path, named: PathNames.Square, fillcolor: UIColor.clearColor(), strokecolor: UIColor.blueColor())
@@ -964,11 +814,6 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         
         firstGame = 0
         
-        // jetBehavior.gravity.magnitude = 0.0
-        
-        if score >= 1 {
-            // displayRatingAlert()
-        }
         // ask to restart alert
         askToRestartAlert()
     }
@@ -994,8 +839,6 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         
         drawJet()
         
-        // jetBehavior.gravity.addItem(<#T##item: UIDynamicItem##UIDynamicItem#>)
-        
         self.startMovingBarriers()
         
         
@@ -1004,21 +847,15 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     }
     
     func continueGame() {
-        // dismissViewControllerAnimated(true, completion: nil)
-        // getReadyAlert()
         
         // same as restart game, just don't reset the score
         barrierOriginX = barrierOriginStart
         drawBarrier()
         gameEndingCollision = false
         
-        // jetBehavior.gravity.magnitude = 1.0
         drawJet()
         self.startMovingBarriers()
         self.startBackgroundAndFloor()
-        
-        // restart gravity when continuing game
-        
         
         scoreLabel.text = "\(score)"
         musicSound.play()
@@ -1026,15 +863,8 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     
     func endGameScoreLabel() {
         
-        /*
-        scoreLabel.textAlignment = NSTextAlignment.Center
-        scoreLabel.font = UIFont(name: "Courier", size: 30)
-        scoreLabel.frame.origin = CGPointMake(self.view.bounds.width/3-smallObjectWidth/2, self.view.bounds.height/4)
-        scoreLabel.text = "Jet Down!"
-        */
-        
         // present modal controller for starting screen, etc
-        var startScreenController = StartScreenViewController(nibName: "StartScreenViewController", bundle: nil)
+        let startScreenController = StartScreenViewController(nibName: "StartScreenViewController", bundle: nil)
         startScreenController.delegate = self
         
         // don't present the start screen controller
@@ -1059,8 +889,9 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         getContinueAlert()
     }
     
+    // MARK: various alerts for starting, continuing, and restarting the game
     func getReadyAlert() {
-        var alert = UIAlertController(title: "Ready?", message: "Tap the screen to fly", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Ready?", message: "Tap the screen to fly", preferredStyle: UIAlertControllerStyle.Alert)
         if (score >= 7) {
             alert.addAction(UIAlertAction(title: "Rate", style: .Default)
                 { (action: UIAlertAction!) -> Void in
@@ -1088,153 +919,15 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         // popping up an alert will cause drawDynamicObjects() to be called once it's dismissed, causing the jet to be redrawn.
         // try directly bringing up the startScreen instead of drawing the restart alert (didn't work)
         endGameScoreLabel()
-        
-        /*
-        var alert = UIAlertController(title: "Restart?", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "No", style: .Cancel)
-            { (action: UIAlertAction!) -> Void in
-                self.endGameScoreLabel()
-            })
-        alert.addAction(UIAlertAction(title: "Yes", style: .Default)
-            { (action: UIAlertAction!) -> Void in
-                self.restartGame()
-            })
-        presentViewController(alert, animated: true, completion: nil)
-        */
+
     }
-    
-    func displayRatingAlert() {
-        if alertViewPresent {
-            // return
-        }
-        
-        var alert = UIAlertController(title: "Please rate us", message: "Give 5-star rating to continue", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel)
-            { (action: UIAlertAction!) -> Void in
-                //print("cancel pressed")
-                //self.startGame()
-                // ask to restart alert
-                self.askToRestartAlert()
-                self.alertViewPresent = false
-            })
-        alert.addAction(UIAlertAction(title: "Rate to continue", style: .Default)
-            { (action: UIAlertAction!) -> Void in
-            // open link to app store
-            //print("rate button pressed")
-            self.rateApp()
-            self.continueGame()
-            self.alertViewPresent = false
-            })
-        
-        /*
-        alert.addAction(UIAlertAction(title: "Buy coins", style: .Default)
-            { (action: UIAlertAction!) -> Void in
-                // open link to app store
-                //print("buy coin button pressed")
-                // do stuff to exit the app
-                // self.musicSound.stop()
-                // self.displayBuyCoinsAlert()
-                
-                // in-app purchases: http://stackoverflow.com/questions/26235822/in-app-purchase-in-swift-with-a-single-product
-                
-                //print("About to fetch the products");
-                if (SKPaymentQueue.canMakePayments())
-                {
-                    var productID:NSSet = NSSet(object: self.product_id!);
-                    var productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID as! Set<String>)
-                    productsRequest.delegate = self;
-                    productsRequest.start();
-                    //print("Fething Products");
-                }
-                else {
-                    //print("can't make purchases");
-                }
-                
-                
-                self.continueGame()
-                //print("buy coin button pressed, set alertViewPresent to false")
-                self.alertViewPresent = false
-            })
-        */
-        
-        alertViewPresent = true
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    func buyProduct(product: SKProduct){
-        //print("Sending the Payment Request to Apple");
-        var payment = SKPayment(product: product)
-        SKPaymentQueue.defaultQueue().addPayment(payment);
-        
-    }
-    
-    //Step 7 Delegate Methods for IAP
-    
-    func productsRequest (request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
-        
-        var count : Int = response.products.count
-        if (count>0) {
-            var validProducts = response.products
-            var validProduct: SKProduct = response.products[0] as SKProduct
-            if (validProduct.productIdentifier == self.product_id) {
-                //print(validProduct.localizedTitle)
-                //print(validProduct.localizedDescription)
-                //print(validProduct.price)
-                buyProduct(validProduct);
-            } else {
-                //print(validProduct.productIdentifier)
-            }
-        } else {
-            //print("nothing")
-        }
-    }
-    
-    
-    func request(request: SKRequest!, didFailWithError error: NSError!) {
-        //print("Error Fetching product information");
-    }
-    
-//    func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!)    {
-        
-    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        //print("Received Payment Transaction Response from Apple");
-        
-        for transaction:AnyObject in transactions {
-            if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction{
-                switch trans.transactionState {
-                case .Purchased:
-                    //print("Product Purchased");
-                    SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
-                    defaults.setBool(true , forKey: "purchased")
-                    // overlayView.hidden = true
-                    break;
-                case .Failed:
-                    //print("Purchased Failed");
-                    SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
-                    break;
-                    
-                case .Restored:
-                    //print("Already Purchased");
-                    SKPaymentQueue.defaultQueue().restoreCompletedTransactions() 
-                    
-                    
-                default:
-                    break;
-                }
-            }
-        }
-        
-    }
-    
-//    func paymentQueue(queue: SKPaymentQueue, updatedDownloads downloads: [SKDownload]) {
-//    }
     
     func displayBuyCoinsAlert() {
         if alertViewPresent {
             // return
         }
         
-        var alert = UIAlertController(title: "Continue?", message: "Purchase coins to continue (50 coins per continue)", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Continue?", message: "Purchase coins to continue (50 coins per continue)", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel)
             { (action: UIAlertAction!) -> Void in
                 ////print("cancel pressed")
@@ -1269,10 +962,12 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     
     // http://stackoverflow.com/questions/27755069/how-can-i-add-a-link-for-a-rate-button-with-swift
     
+    // MARK: - go to app store link
     func rateApp(){
         UIApplication.sharedApplication().openURL(NSURL(string: "itms://itunes.apple.com/us/app/flighty-jet/id1067196690?ls=1&mt=8")!)
     }
     
+    // MARK: - draw and animate various parts of the game
     // draw stuff into background
     func drawBackground() {
         
@@ -1288,53 +983,30 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         gameView.addSubview(cloudView)
         gameView.sendSubviewToBack(cloudView)
         
-//        animateCloud()
-//        cloudTimer = NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: Selector("animateCloud"), userInfo: nil, repeats: true)
         
-        
-        // draw cloud2
+        // draw the second cloud
         var cloud2Frame = CGRect(origin: CGPointZero, size: CGSizeMake(barrierWidth * 0.75, gameView.bounds.height * 0.1))
         cloud2Frame.origin.x = gameView.bounds.size.width * 0.8
         cloud2Frame.origin.y = gameView.bounds.size.height * 0.2
         
         cloud2View = UIImageView(frame: cloud2Frame)
         cloud2View.image = UIImage(named: "cloud2.png")
-//        cloud2View.image = UIImage(named: "ufoClearBackground.png")
         
         cloud2View.backgroundColor = UIColor.clearColor()  // different behaviors based on color?
         gameView.addSubview(cloud2View)
-        
-//        jetBehavior.addUfo(cloud2View, id: "ufo")
-        
-//        animateCloud2()
-//        cloudTimer2 = NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: Selector("animateCloud2"), userInfo: nil, repeats: true)
-        
-        
-        // draw tree 
-        var treeW = smallObjectWidth * 0.8
-        var treeH = smallObjectWidth * 1.4
-        var treeFrame = CGRectMake(gameView.bounds.size.width * 0.8, gameView.bounds.height-treeH-floorHeight, treeW, treeH)
-        treeView = UIImageView(frame: treeFrame)
-        treeView.image = UIImage(named: "tree1.png")
-        treeView.backgroundColor = UIColor.clearColor()
-        
-        // don't draw tree 
-        
-//        gameView.addSubview(treeView)
-//        animateTree()
-//        var timer3 = NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: Selector("animateTree"), userInfo: nil, repeats: true)
     }
     
+    // loop the animation of the clouds, and the floor
     func startBackgroundAndFloor() {
         animateCloud()
         cloudTimer = NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: Selector("animateCloud"), userInfo: nil, repeats: true)
         animateCloud2()
         cloudTimer2 = NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: Selector("animateCloud2"), userInfo: nil, repeats: true)
         animateFloor()
-        //floorTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("animateFloor"), userInfo: nil, repeats: true)
         floorTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("animateFloor"), userInfo: nil, repeats: true)
     }
-    
+
+    // stop animations of the clouds and floor
     func stopBackgroundAndFloor() {
         cloudTimer.invalidate()
         cloudTimer2.invalidate()
@@ -1346,25 +1018,22 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         
         musicSound.stop()
     }
-    
+
+    // draw the floor
     func drawFloor() {
-        // var rect = CGRectMake(-10, gameView.bounds.height-floorHeight, gameView.bounds.width*2.5, floorHeight*4)
-        var rect = CGRectMake(0, self.view.bounds.height-70, 500, 100)
+        let rect = CGRectMake(0, self.view.bounds.height-70, 500, 100)
         floorView = UIImageView(frame: rect)
         floorView.image = UIImage(named: "floor500x100.png")
         gameView.addSubview(floorView)
         
-        var rect2 = CGRectMake(500, self.view.bounds.height-70, 500, 100)
+        let rect2 = CGRectMake(500, self.view.bounds.height-70, 500, 100)
         floorView2 = UIImageView(frame: rect2)
-        //floorView2.image = UIImage(named: "floorBlack500x100.png")
         floorView2.image = UIImage(named: "floor500x100.png")
         gameView.addSubview(floorView2)
         
-        //        animateFloor()
-        //        floorTimer = NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: Selector("animateFloor"), userInfo: nil, repeats: true)
-        
     }
-    
+
+    // animate the floor (needs to be called in a loop)
     func animateFloor() {
         floorView.frame.origin.x = 0  // -10
         floorView2.frame.origin.x = 500
@@ -1378,13 +1047,8 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
             },
             completion: { if $0 { } } )
         
-//        floorView2.frame.origin.x = 500  // -10        
-//        UIView.animateWithDuration(2.0,  // 1.0
-//            delay: 0,
-//            options: UIViewAnimationOptions.CurveLinear,
-//            animations: {self.floorView2.frame.origin.x = 0},
-//            completion: { if $0 { } } )
     }
+    
     
     func animateCloud() {
         self.cloudView.frame.origin.x = gameView.bounds.size.width * 0.8
@@ -1404,23 +1068,14 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
             completion: { if $0 { } } )
     }
     
-    func animateTree() {
-        self.treeView.frame.origin.x = gameView.bounds.size.width * 0.8
-        UIView.animateWithDuration(7.0,
-            delay: 0,
-            options: UIViewAnimationOptions.CurveLinear,
-            animations: {self.treeView.frame.origin.x = -self.gameView.frame.width-50},
-            completion: { if $0 { } } )
-    }
-    
     // this is an invisible wall to keep the plane from drifting backwards
     func drawBackWall() {
-        var x = gameView.bounds.size.width/4 - 1
-        var topR = CGPointMake(x, 0)
-        var botR = CGPointMake(x, gameView.bounds.size.height)
-        var topL = CGPointMake(x-10, 0)
-        var botL = CGPointMake(x-10, gameView.bounds.size.height)
-        var path = UIBezierPath()
+        let x = gameView.bounds.size.width/4 - 1
+        let topR = CGPointMake(x, 0)
+        let botR = CGPointMake(x, gameView.bounds.size.height)
+        let topL = CGPointMake(x-10, 0)
+        let botL = CGPointMake(x-10, gameView.bounds.size.height)
+        let path = UIBezierPath()
         path.moveToPoint(topR)
         path.addLineToPoint(botR)
         path.addLineToPoint(botL)
@@ -1432,35 +1087,24 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
 
     // MARK: - gestures
     
-    // probably better to just keep shooting bullets and tap with one finger
+    // tapping the screen pushes the jet up, and also shoots bullets
     @IBAction func tapScreen(sender: UITapGestureRecognizer) {
-        var tapOrigin = sender.locationInView(gameView)
-        // ////print("tap at: \(tapOrigin.x), \(tapOrigin.y)")
-        
         if jetView == nil {
             return
         }
         
+        print("tap received")
+        
+        // check on state of tap gesture recognizer
         switch sender.state {
         case .Ended: fallthrough
         case .Changed:
             
-            var oneTapShooting = true
-            
             playSound("jet")
             
-            if oneTapShooting {
-                jetBehavior.pushJetUp(jetView!)
-                drawBullet()
-            }
-            else {
-                if tapOrigin.x < gameView.bounds.width/2 {
-                    jetBehavior.pushJetUp(jetView!)
-                }
-                else {
-                    drawBullet()
-                }
-            }
+            jetBehavior.pushJetUp(jetView!)
+            drawBullet()
+            
         default:
             break
         }
@@ -1469,36 +1113,28 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     
     // MARK: - delegated collision behavior
     
+    // MARK: collion between item and a boundary
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, atPoint p: CGPoint) {
-        // ////print("collision btwn item and boundary")
         
-        
-        
-        // code to remove the brick that the ball hit
-        var bullet = item as! UIView
-        
-        // check is identifier is nil
+        // check if identifier is nil
         let identOpt : NSCopying? = identifier
         if let ident = identOpt {
-             // ////print("boundary identifier not nil")
         }
         else {
-            ////print("boundary identifier is nil")
             return
         }
         
         var boundryStr: String
         boundryStr = identifier as! String
-        // //print("collision at: \(p.x), \(p.y) with boundary: \(boundryStr)")
         
         // remove bullet
         for bulletIndex in 0..<bulletCount {
-            var bulletStr = "bullet_\(bulletIndex)"
+            let bulletStr = "bullet_\(bulletIndex)"
             if let bulletViewInArray = bulletViewArray[bulletStr] {
                 if item as? UIView == bulletViewInArray {
                     // //print("remove bullet: \(bulletStr)")
                     
-                    var newNumCollisions:Int = bulletCollisionsArray[bulletStr]! + 1
+                    let newNumCollisions:Int = bulletCollisionsArray[bulletStr]! + 1
                     bulletCollisionsArray[bulletStr] = newNumCollisions
                     
                     // remove bullet on first collision
@@ -1531,12 +1167,9 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
                 // jet crashes into barrier or walls
                 if (boundryStr == PathNames.Walls || boundryStr == PathNames.MovingBarrierBottom || boundryStr == PathNames.MovingBarrierTop) {
                     
-                    
-                    
                     gameEnded()
                     removeJetView()
                     
-                    //print("setting gameEndingCollision: true")
                     gameEndingCollision = true
                     playSound("collision")
                     
@@ -1546,14 +1179,16 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
     }
 
     
+    // MARK: collision between two different items
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint) {
         
         if gameEndingCollision {
             return
         }
         
-        var item1str = stringForCollisionItem(item1)
-        var item2str = stringForCollisionItem(item2)
+        // get the strings for the items being collided
+        let item1str = stringForCollisionItem(item1)
+        let item2str = stringForCollisionItem(item2)
         
         // 3 possibilities: jet colliding with bullet, ufo colliding with bullet, jet colliding with ufo
         var bulletFound = false
@@ -1576,7 +1211,7 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         // if a bullet was found, remove either the jet or the gravityItem
         if bulletFound {
             for bulletIndex in 0..<bulletCount {
-                var bulletStr = "bullet_\(bulletIndex)"
+                let bulletStr = "bullet_\(bulletIndex)"
                 if let bulletViewInArray = bulletViewArray[bulletStr] {
                     if bulletItemView == bulletViewInArray {
                         //print("remove bullet: \(bulletStr)")
@@ -1593,9 +1228,6 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
                             removeJetView()
                             
                             gameEndingCollision = true
-                            
-                            //resetScoreAndDisplay()
-                            //drawJet()
                         }
                         
                         if gravityItemFound {
@@ -1610,24 +1242,27 @@ class FighterJetViewController: UIViewController, UIDynamicAnimatorDelegate, UIC
         }
         
         // if both jet and gravityItem are found, remove both
+        // gravity item is the ufo
         if jetFound && gravityItemFound {
             
-            
+            // end the game
             gameEnded()
             
+            // remove the jet view
             removeJetView()
+            
+            // remove the ufo view
             removeGravityItem()
             
+            // set flag to true
             gameEndingCollision = true
             
             playSound("collision")
             
-            // resetScoreAndDisplay()
-            
-            // drawJet()
         }
     }
 
+    // return the string for the item that collided
     func stringForCollisionItem(item: UIDynamicItem) -> String {
         if item as? UIView == jetView {
             return "jet"
